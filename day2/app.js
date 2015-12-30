@@ -3,6 +3,7 @@ var fs = require('fs');
 
 var dims = [];
 var sqft = 0;
+var ribbonLength = 0;
 
 fs.readFile('input.txt', 'utf8', function(error, data){
 	dims = data.split('\r\n');
@@ -13,20 +14,21 @@ fs.readFile('input.txt', 'utf8', function(error, data){
 		{
 			var prez = new present(p);
 			sqft += prez.getTotalSqft();
-			console.log(prez);
-			console.log("surfaceArea: " + prez.getSurfaceArea() + " slack: " + prez.getSlack());
+			ribbonLength += prez.getRibbonLength();
 		}
 	}
-	console.log(sqft);
+	console.log("Wrapping paper: " + sqft);
+	console.log("Ribbon Length: " + ribbonLength);
 });
 
 class present
 {
 	constructor(str)
 	{
-		this.l = str.split('x')[0];
-		this.w = str.split('x')[1];
-		this.h = str.split('x')[2];
+		this.dimensions = str.split('x');
+		this.l = this.dimensions[0];
+		this.w = this.dimensions[1];
+		this.h = this.dimensions[2];
 	}
 	getSurfaceArea()
 	{
@@ -39,5 +41,12 @@ class present
 	getTotalSqft()
 	{
 		return this.getSurfaceArea() + this.getSlack();
+	}
+	getRibbonLength()
+	{
+		this.dimensions.sort(function(a,b){return parseInt(a) - parseInt(b)});
+		var partA = this.dimensions[0] * 2 + this.dimensions[1] * 2;
+		var partB = this.l * this.h * this.w;
+		return partA + partB;
 	}
 }
