@@ -7,9 +7,39 @@ fs.readFile('input.txt', 'utf8', function(error, data)
 	var housesWithMoreThanOnePresent = 0;
 	var houses = createArray(x*2, y*2);
 	
-	houses[x][y] = 1;
+	houses[x][y] = 2;
+	var counter = 0;
 	for(var c of data)
 	{
+		if(counter++ % 2 == 0)
+		{
+			continue;
+		}
+		if(c == '<')
+		{
+			x--;
+		}else if(c == '>')
+		{
+			x++;
+		}else if(c == '^')
+		{
+			y++;
+		}else if(c == 'v')
+		{
+			y--;
+		}
+		houses[x][y]++;
+	}
+
+	x = 500;
+	y = 500;
+	counter = 0;
+	for(var c of data)
+	{
+		if(counter++ % 2 != 0)
+		{
+			continue;
+		}
 		if(c == '<')
 		{
 			x--;
@@ -36,6 +66,7 @@ fs.readFile('input.txt', 'utf8', function(error, data)
 			}
 		}
 	}
+	
 	console.log(housesWithMoreThanOnePresent);
 });
 
