@@ -13,7 +13,6 @@ fs.readFile('input.txt', 'utf8', function(error, data){
 	for (var c of fdata) 
 	{
 		floor += c == "(" ? 1 : -1;
-		//console.log(floor);
 		if(floor == -1)
 		{
 			console.log("basement reached on position: " + position);
