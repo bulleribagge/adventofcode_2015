@@ -7,11 +7,13 @@ fs.readFile('input.txt', 'utf8', function(error, data)
 
 	for(var l of fdata)
 	{
-		hasThreeVowels = threeVowels(l);
-		hasDoubleLetters = doubleLetters(l);
-		hasNaughtyString = naughtyString(l);
+		hasLetterPair = letterPair(l);
+		hasRepeatLetter = repeatLetter(l);
+
+		//console.log("string: " + l + " hasLetterPair: " + hasLetterPair);
+		//console.log("string: " + l + " hasRepeatLetter: " + hasRepeatLetter);
 		
-		if(hasThreeVowels && hasDoubleLetters && !hasNaughtyString)
+		if(hasLetterPair && hasRepeatLetter)
 		{
 			numNice++;
 		}
@@ -19,6 +21,18 @@ fs.readFile('input.txt', 'utf8', function(error, data)
 
 	console.log("numnice: " + numNice);
 });
+
+function letterPair(str)
+{
+	var regexp = /(\w{2}).*\1/g;
+	return regexp.test(str);
+}
+
+function repeatLetter(str)
+{
+	var regexp = /(\w{1}).{1}\1/g;
+	return regexp.test(str);
+}
 
 function threeVowels(str)
 {
