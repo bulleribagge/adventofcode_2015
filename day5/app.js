@@ -3,19 +3,26 @@ var fs = require('fs');
 fs.readFile('input.txt', 'utf8', function(error, data)
 {
 	var fdata = data.split('\r\n');
+	var numNice = 0;
+
 	for(var l of fdata)
 	{
 		hasThreeVowels = threeVowels(l);
-		if(hasThreeVowels)
+		hasDoubleLetters = doubleLetters(l);
+		hasNaughtyString = naughtyString(l);
+		
+		if(hasThreeVowels && hasDoubleLetters && !hasNaughtyString)
 		{
-			console.log("str: " + l + " threeVowels: " + hasThreeVowels);
+			numNice++;
 		}
 	}
+
+	console.log("numnice: " + numNice);
 });
 
 function threeVowels(str)
 {
-	numVowels = 0;
+	var numVowels = 0;
 	for(var c of str)
 	{
 		switch (c)
@@ -29,11 +36,40 @@ function threeVowels(str)
 		}
 	}
 
-	if(numVowels >= 3)
+	return numVowels >= 3;
+}
+
+function doubleLetters(str)
+{
+	var lastLetter = str.substr(0, 1);
+	for(var i = 1; i <= str.length - 1; i++)
 	{
-		return true;
-	}else
-	{
-		return false;
+		if(lastLetter == str[i])
+		{
+			return true;
+		}
+		lastLetter = str[i];
 	}
+
+	return false;
+}
+
+function naughtyString(str)
+{
+	var lastLetter = str.substr(0, 1);
+	for(var i = 1; i <= str.length - 1; i++)
+	{
+		switch(lastLetter + str[i])
+		{
+			case 'ab':
+			case 'cd':
+			case 'pq':
+			case 'xy':
+				return true;
+		}
+
+		lastLetter = str[i];
+	}
+
+	return false;
 }
