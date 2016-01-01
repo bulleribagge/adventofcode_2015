@@ -12,33 +12,30 @@ fs.readFile('input.txt', 'utf8', function(error, data)
         performInstruction(grid, i);
     }
 
-    var numLit = 0;
+    var totBrightness = 0;
     for(var x = 0; x < xSize; x++)
     {
         for(var y = 0; y < ySize; y++)
         {
-            if(grid[x][y] == true)
-            {
-                numLit++;
-            }
+            totBrightness += grid[x][y];
         }
     }
 
-    console.log(numLit);
+    console.log(totBrightness);
 });
 
 function performInstruction(grid, instruction)
 {
-    var action = "";
+    var delta = 0;
     if(instruction.indexOf('toggle') != -1)
     {
-        action = 'toggle';
+        delta = 2;
     }else if(instruction.indexOf('turn on') != -1)
     {
-        action = 'turn on';
+        delta = 1;
     }else if(instruction.indexOf('turn off') != -1)
     {
-        action = 'turn off';
+        delta = -1;
     }
 
     var coords = instruction.match(/\d+/g);
@@ -52,17 +49,10 @@ function performInstruction(grid, instruction)
     {
         for(var y = startY; y <= stopY; y++)
         {
-            switch(action)
+            grid[x][y] += delta;
+            if(grid[x][y] < 0)
             {
-                case 'toggle':
-                    grid[x][y] = !grid[x][y];
-                    break;
-                case 'turn on':
-                    grid[x][y] = true;
-                    break;
-                case 'turn off':
-                    grid[x][y] = false;
-                    break;
+                grid[x][y] = 0;
             }
         }
     }
@@ -77,11 +67,11 @@ function createArray(x, y)
     	arr[i] = new Array(y);
     }
 
-    for(var j = 0; j < x - 1; j++)
+    for(var j = 0; j < x; j++)
     {
     	for(var k = 0; k < y; k++)
     	{
-    		arr[j][k] = false;
+    		arr[j][k] = 0;
     	}
     }
 
