@@ -2,7 +2,7 @@
 var fs = require('fs');
 
 var distances;
-var min = Infinity;
+var max = 0;
 
 fs.readFile('input.txt', 'utf8', function(error, data)
 {
@@ -16,11 +16,10 @@ fs.readFile('input.txt', 'utf8', function(error, data)
 	}
 
 	var nodes = getNodes(distances);
-	//console.log(JSON.stringify(nodes));
 	
 	forPermutation(nodes, nodes.length, 0, nodes.length);
 
-	console.log(min);
+	console.log(max);
 });
 
 function forPermutation(arr, n, pos, depth)
@@ -33,9 +32,9 @@ function forPermutation(arr, n, pos, depth)
 			s += arr[i] + " ";
 		}
 		var distance = getTotalDistanceForPermutation(arr);
-		if(distance < min)
+		if(distance > max)
 		{
-			min = distance;
+			max = distance;
 			console.log(s);
 		}
 		return;
