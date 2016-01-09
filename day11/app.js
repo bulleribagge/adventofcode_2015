@@ -1,4 +1,4 @@
-var password = "cqjxjnds";
+var password = "cqjxxyzz";
 var curr = password;
 var legit = false;
 
