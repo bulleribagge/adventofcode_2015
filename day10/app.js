@@ -1,7 +1,7 @@
 var input = "3113322113";
 var curr = input;
 
-for(var i = 0; i < 40; i++)
+for(var i = 0; i < 50; i++)
 {
 	//console.log(curr);
 	curr = lookAndSay(curr);
